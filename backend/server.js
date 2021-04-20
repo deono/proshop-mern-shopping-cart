@@ -1,8 +1,8 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const products = require('./data/products');
+import express from 'express';
+import { config } from 'dotenv';
+import products from './data/products.js';
 
-dotenv.config();
+config();
 
 // initialize express
 const app = express();
@@ -20,7 +20,7 @@ app.get('/api/products', (req, res) => {
 
 // get a single product
 app.get('/api/products/:id', (req, res) => {
-  const product = products.find(p => p._id === req.params.id);
+  const product = find(p => p._id === req.params.id);
   // serve as json file
   res.json(product);
 });
