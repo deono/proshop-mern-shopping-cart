@@ -1,8 +1,13 @@
 import express from 'express';
 import { config } from 'dotenv';
+import connectDB from './config/db.js'; // add the .js extention when using ES Modules (import syntax)
 import products from './data/products.js';
 
+// dotenv
 config();
+
+// connect to the database
+connectDB();
 
 // initialize express
 const app = express();
