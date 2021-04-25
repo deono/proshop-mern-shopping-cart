@@ -1,6 +1,7 @@
 import express from 'express';
 import { config } from 'dotenv';
 import colors from 'colors';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js'; // add the .js extention when using ES Modules (import syntax)
 
 // routes
@@ -22,6 +23,10 @@ app.get('/', (req, res) => {
 
 // mount routes
 app.use('/api/products', productRoutes);
+
+// use middleware
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 // run the server
