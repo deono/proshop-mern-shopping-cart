@@ -3,7 +3,7 @@ import { CART_ADD_ITEM } from "../constants/cartConstants";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   // get the product data from the database
-  const { data } = axios.get(`/api/products/${id}`);
+  const { data } = await axios.get(`/api/products/${id}`);
 
   dispatch({
     type: CART_ADD_ITEM,
