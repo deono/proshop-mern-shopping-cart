@@ -6,6 +6,7 @@ import connectDB from './config/db.js'; // add the .js extention when using ES M
 
 // routes
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 // dotenv
 config();
@@ -16,6 +17,9 @@ connectDB();
 // initialize express
 const app = express();
 
+// parse json data in the request body
+app.use(express.json());
+
 // default route
 app.get('/', (req, res) => {
   res.send('API is running...');
@@ -23,6 +27,7 @@ app.get('/', (req, res) => {
 
 // mount routes
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // use middleware
 app.use(notFound);
