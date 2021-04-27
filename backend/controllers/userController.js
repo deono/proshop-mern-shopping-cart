@@ -1,10 +1,10 @@
 // https://www.npmjs.com/package/express-async-handler/v/1.1.4
 // Simple middleware for handling exceptions inside of async express routes
 // and passing them to your express error handlers.
-import asyncHandler from 'express-async-handler';
+import asyncHandler from "express-async-handler";
+import generateToken from "../utils/generateToken.js";
 // import user model
-import User from '../models/userModel.js';
-import { userInfo } from 'os';
+import User from "../models/userModel.js";
 
 // @desc    Authenticate user and get token
 // @route   POST /api/users/login
@@ -17,17 +17,17 @@ const authUser = asyncHandler(async (req, res) => {
 
   // if the user exists and the password matches
   if (user && (await user.matchPassword(password))) {
-    // return user data and token
+    // return user data and token containing user id
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
-    throw new Error('Invalid email or password');
+    throw new Error("Invalid email or password");
   }
 });
 
