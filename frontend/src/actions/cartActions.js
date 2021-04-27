@@ -1,5 +1,5 @@
-import axios from "axios";
-import { CART_ADD_ITEM } from "../constants/cartConstants";
+import axios from 'axios';
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants';
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   // get the product data from the database
@@ -13,11 +13,22 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       image: data.image,
       price: data.price,
       countInStock: data.countInStock,
-      qty,
-    },
+      qty
+    }
   });
 
   // save the cartItems to localStorage
   // getState() retreives the whole state from the store
-  localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
+
+export const removeFromCart = id => (dispatch, getState) => {
+  // remove the item from state
+  dispatch({
+    type: CART_REMOVE_ITEM,
+    payload: id
+  });
+
+  // save the updated cartItems to localStorage
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
