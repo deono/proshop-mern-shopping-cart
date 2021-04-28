@@ -31,4 +31,24 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser };
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+  // the user is added to the request object by the authMiddleware
+  const user = await User.findById(req.user._id);
+
+  // check for the user and return as json if exists
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    throw new Error("User not found");
+  }
+});
+
+export { authUser, getUserProfile };
