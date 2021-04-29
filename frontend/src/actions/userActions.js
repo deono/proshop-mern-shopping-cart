@@ -43,3 +43,12 @@ export const login = (email, password) => async (dispatch) => {
     });
   }
 };
+
+export const logout = () => (dispatch) => {
+  // clear the user from localStorage
+  localStorage.removeItem("userInfo");
+
+  dispatch({
+    type: USER_LOGOUT,
+  });
+};
