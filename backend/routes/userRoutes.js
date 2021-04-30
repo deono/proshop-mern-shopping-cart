@@ -5,6 +5,7 @@ import {
   authUser,
   registerUser,
   getUserProfile,
+  updateUserProfile,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -21,6 +22,13 @@ router.post("/login", authUser);
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
-router.route("/profile").get(protect, getUserProfile);
+// ================================
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+router
+  .route("/profile")
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
 
 export default router;
