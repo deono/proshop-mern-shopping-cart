@@ -1,14 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { logout } from "../actions/userActions";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap';
+import { logout } from '../actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
+
+  // get cart items to display the count in navbar
+  const cart = useSelector(state => state.cart);
+  const { cartItems } = cart;
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -16,7 +20,7 @@ const Header = () => {
 
   return (
     <header>
-      .{" "}
+      .{' '}
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
@@ -27,7 +31,10 @@ const Header = () => {
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart'></i> Cart
+                  <i className='fas fa-shopping-cart'></i> Cart{' '}
+                  {cartItems.length > 0 && (
+                    <Badge variant='info'>{cartItems.length}</Badge>
+                  )}
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
