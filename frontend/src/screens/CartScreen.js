@@ -37,7 +37,7 @@ const CartScreen = ({ match, location, history }) => {
   const checkoutHandler = () => {
     console.log('checkoutHandler called');
     // push to /login, if logged in, redirect to shipping
-    history.push('/login?redirect=shipping');
+    // history.push('/login?redirect=shipping');
   };
 
   return (

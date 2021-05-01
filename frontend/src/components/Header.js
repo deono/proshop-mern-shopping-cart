@@ -33,7 +33,9 @@ const Header = () => {
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i> Cart{' '}
                   {cartItems.length > 0 && (
-                    <Badge variant='info'>{cartItems.length}</Badge>
+                    <Badge variant='info'>
+                      {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                    </Badge>
                   )}
                 </Nav.Link>
               </LinkContainer>

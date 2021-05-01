@@ -24,6 +24,26 @@ const ProductScreen = ({ history, match }) => {
   const productDetails = useSelector(state => state.productDetails);
   const { loading, error, product } = productDetails;
 
+  // get cart items to check if product already in cart
+  const cart = useSelector(state => state.cart);
+  const { cartItems } = cart;
+
+  // test if product already in cart
+  const productInCart = (cartItems, product) => {
+    let foundProductInCart;
+    if (cartItems && product) {
+      foundProductInCart = cartItems.find(
+        cartItem => cartItem.product === product._id
+      );
+    }
+
+    if (foundProductInCart) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   useEffect(() => {
     dispatch(listProductDetails(match.params.id));
   }, [dispatch, match]);
@@ -34,8 +54,9 @@ const ProductScreen = ({ history, match }) => {
   // };
 
   const addToCartHandler = () => {
-    dispatch(addToCart(product._id, qty));
-    history.push('/cart');
+    console.log('qty', qty);
+    dispatch(addToCart(product._id, Number(qty)));
+    // history.push('/cart');
   };
 
   const renderProductDetails = () => {
@@ -102,9 +123,14 @@ const ProductScreen = ({ history, match }) => {
                     onClick={addToCartHandler}
                     className='btn-block'
                     type='button'
-                    disabled={product.countInStock === 0}
+                    disabled={
+                      product.countInStock === 0 ||
+                      productInCart(cartItems, product)
+                    }
                   >
-                    Add to cart
+                    {productInCart(cartItems, product)
+                      ? 'Already in cart'
+                      : 'Add to cart'}
                   </Button>
                 </ListGroup.Item>
               </ListGroup>
