@@ -15,20 +15,20 @@ import { addToCart, removeFromCart } from '../actions/cartActions';
 
 const CartScreen = ({ match, location, history }) => {
   // get the product id
-  const productId = match.params.id;
+  // const productId = match.params.id;
   // get the quantity
-  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
+  // const qty = location.search ? Number(location.search.split('=')[1]) : 1;
 
   const dispatch = useDispatch();
 
   const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
 
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
-  }, [dispatch, productId, qty]);
+  // useEffect(() => {
+  //   if (productId) {
+  //     dispatch(addToCart(productId, qty));
+  //   }
+  // }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = id => {
     dispatch(removeFromCart(id));
