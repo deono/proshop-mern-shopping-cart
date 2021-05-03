@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -37,7 +37,7 @@ const CartScreen = ({ match, location, history }) => {
   const checkoutHandler = () => {
     console.log('checkoutHandler called');
     // push to /login, if logged in, redirect to shipping
-    // history.push('/login?redirect=shipping');
+    history.push('/login?redirect=shipping');
   };
 
   return (

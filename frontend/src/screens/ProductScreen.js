@@ -24,6 +24,8 @@ const ProductScreen = ({ history, match }) => {
   const productDetails = useSelector(state => state.productDetails);
   const { loading, error, product } = productDetails;
 
+  console.log('rating', product.rating);
+
   // get cart items to check if product already in cart
   const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
@@ -73,7 +75,7 @@ const ProductScreen = ({ history, match }) => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
-                  value={product.rating}
+                  value={product.rating || 0}
                   text={`${product.numReviews} reviews`}
                 />
               </ListGroup.Item>
