@@ -1,12 +1,13 @@
-import express from 'express';
-import { config } from 'dotenv';
-import colors from 'colors';
-import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-import connectDB from './config/db.js'; // add the .js extention when using ES Modules (import syntax)
+import express from "express";
+import { config } from "dotenv";
+import colors from "colors";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import connectDB from "./config/db.js"; // add the .js extention when using ES Modules (import syntax)
 
 // routes
-import productRoutes from './routes/productRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 // dotenv
 config();
@@ -21,13 +22,14 @@ const app = express();
 app.use(express.json());
 
 // default route
-app.get('/', (req, res) => {
-  res.send('API is running...');
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
 
 // mount routes
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 // use middleware
 app.use(notFound);
