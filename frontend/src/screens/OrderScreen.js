@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import { getOrderDetails } from '../actions/orderActions';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import { getOrderDetails } from "../actions/orderActions";
 
 const OrderScreen = ({ match }) => {
   const orderId = match.params.id;
 
   const dispatch = useDispatch();
 
-  const orderDetails = useSelector(state => state.orderDetails);
+  const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
   if (!loading) {
     //   Calculate prices
-    const addDecimals = num => {
+    const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
     };
 
@@ -26,10 +26,8 @@ const OrderScreen = ({ match }) => {
   }
 
   useEffect(() => {
-    if (!order || order._id !== orderId) {
-      dispatch(getOrderDetails(orderId));
-    }
-  }, [order, orderId]);
+    dispatch(getOrderDetails(orderId));
+  }, [dispatch, orderId]);
 
   return loading ? (
     <Loader />
@@ -47,13 +45,13 @@ const OrderScreen = ({ match }) => {
                 <strong>Name: </strong> {order.user.name}
               </p>
               <p>
-                <strong>Email: </strong>{' '}
+                <strong>Email: </strong>{" "}
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
                 <strong>Address: </strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
-                {order.shippingAddress.postalCode},{' '}
+                {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
+                {order.shippingAddress.postalCode},{" "}
                 {order.shippingAddress.country}
               </p>
               {order.isDelivered ? (
