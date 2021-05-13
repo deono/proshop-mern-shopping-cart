@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+
 import {
   addOrderItems,
   getOrderById,
@@ -8,7 +9,7 @@ import {
 import { protect } from "../middleware/authMiddleware.js";
 
 // @desc    Create new order
-// @route   POST /api/order
+// @route   POST /api/orders
 // @access  Private
 router.route("/").post(protect, addOrderItems);
 
