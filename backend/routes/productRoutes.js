@@ -1,19 +1,13 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 // all functionality is in controller file
 import {
   getProducts,
-  getProductById
-} from '../controllers/productController.js';
+  getProductById,
+} from "../controllers/productController.js";
 
-// @desc    Fetch all products
-// @route   GET /api/products
-// @access  Public
-router.route('/').get(getProducts);
+router.route("/").get(getProducts);
 
-// @desc    Fetch single product
-// @route   GET /api/products/:id
-// @access  Public
-router.route('/:id').get(getProductById);
+router.route("/:id").get(getProductById);
 
 export default router;
