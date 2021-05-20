@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
   Col,
@@ -8,10 +8,10 @@ import {
   Image,
   Form,
   Button,
-  Card
-} from 'react-bootstrap';
-import Message from '../components/Message';
-import { addToCart, removeFromCart } from '../actions/cartActions';
+  Card,
+} from "react-bootstrap";
+import Message from "../components/Message";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = ({ match, location, history }) => {
   // get the product id
@@ -21,7 +21,7 @@ const CartScreen = ({ match, location, history }) => {
 
   const dispatch = useDispatch();
 
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   // useEffect(() => {
@@ -30,14 +30,13 @@ const CartScreen = ({ match, location, history }) => {
   //   }
   // }, [dispatch, productId, qty]);
 
-  const removeFromCartHandler = id => {
+  const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
-    console.log('checkoutHandler called');
     // push to /login, if logged in, redirect to shipping
-    history.push('/login?redirect=shipping');
+    history.push("/login?redirect=shipping");
   };
 
   return (
@@ -50,7 +49,7 @@ const CartScreen = ({ match, location, history }) => {
           </Message>
         ) : (
           <ListGroup variant='flush'>
-            {cartItems.map(item => (
+            {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
                 <Row>
                   <Col md={2}>
@@ -64,13 +63,13 @@ const CartScreen = ({ match, location, history }) => {
                     <Form.Control
                       as='select'
                       value={item.qty}
-                      onChange={e =>
+                      onChange={(e) =>
                         dispatch(
                           addToCart(item.product, Number(e.target.value))
                         )
                       }
                     >
-                      {[...Array(item.countInStock).keys()].map(x => (
+                      {[...Array(item.countInStock).keys()].map((x) => (
                         <option key={x + 1}>{x + 1}</option>
                       ))}
                     </Form.Control>
@@ -98,7 +97,7 @@ const CartScreen = ({ match, location, history }) => {
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
               </h2>
-              &pound;{' '}
+              &pound;{" "}
               {cartItems
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}

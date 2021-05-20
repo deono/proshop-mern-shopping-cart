@@ -1,6 +1,6 @@
-import asyncHandler from 'express-async-handler';
+import asyncHandler from "express-async-handler";
 
-import Order from '../models/orderModel.js';
+import Order from "../models/orderModel.js";
 
 // @desc    Create new order
 // @route   GET /api/orders
@@ -13,12 +13,12 @@ const addOrderItems = asyncHandler(async (req, res) => {
     itemsPrice,
     taxPrice,
     shippingPrice,
-    totalPrice
+    totalPrice,
   } = req.body;
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
-    throw new Error('No order items');
+    throw new Error("No order items");
     return;
   } else {
     // create a new order in the database
@@ -30,7 +30,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       itemsPrice,
       taxPrice,
       shippingPrice,
-      totalPrice
+      totalPrice,
     });
     // save the order
     const createdOrder = await order.save();
@@ -44,8 +44,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   // fetch the order from the database
   const order = await Order.findById(req.params.id).populate(
-    'user',
-    'name email'
+    "user",
+    "name email"
   );
 
   // check if order exists
@@ -53,12 +53,12 @@ const getOrderById = asyncHandler(async (req, res) => {
     res.json(order);
   } else {
     res.status(404);
-    throw new Error('Order not found');
+    throw new Error("Order not found");
   }
 });
 
 // @desc    Update order to paid
-// @route   GET /api/order/:id/pay
+// @route   PUT /api/order/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   // fetch the order from the database

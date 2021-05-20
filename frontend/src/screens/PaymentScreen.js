@@ -21,7 +21,6 @@ const PaymentScreen = ({ history }) => {
   const submitHandler = (e) => {
     // handle submit
     e.preventDefault();
-    console.log("form submitted");
     // dispatch save payment method
     dispatch(savePaymentMethod(paymentMethod));
     // move to place order screen

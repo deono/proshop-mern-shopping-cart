@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import FormContainer from '../components/FormContainer';
-import CheckoutSteps from '../components/CheckoutSteps';
-import { saveShippingAddress } from '../actions/cartActions';
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import FormContainer from "../components/FormContainer";
+import CheckoutSteps from "../components/CheckoutSteps";
+import { saveShippingAddress } from "../actions/cartActions";
 
 const ShippingScreen = ({ history }) => {
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
   // set shippingAddress from localStorage to component state
@@ -17,14 +17,13 @@ const ShippingScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
-  const submitHandler = e => {
+  const submitHandler = (e) => {
     // handle submit
     e.preventDefault();
-    console.log('form submitted');
     // dispatch save shipping address
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     // move to payment screen
-    history.push('/payment');
+    history.push("/payment");
   };
 
   return (
@@ -38,7 +37,7 @@ const ShippingScreen = ({ history }) => {
             type='text'
             placeholder='Enter Address'
             value={address}
-            onChange={e => setAddress(e.target.value)}
+            onChange={(e) => setAddress(e.target.value)}
             required
           ></Form.Control>
         </Form.Group>
@@ -49,7 +48,7 @@ const ShippingScreen = ({ history }) => {
             type='text'
             placeholder='Enter City'
             value={city}
-            onChange={e => setCity(e.target.value)}
+            onChange={(e) => setCity(e.target.value)}
             required
           ></Form.Control>
         </Form.Group>
@@ -60,7 +59,7 @@ const ShippingScreen = ({ history }) => {
             type='text'
             placeholder='Enter Postal Code'
             value={postalCode}
-            onChange={e => setPostalCode(e.target.value)}
+            onChange={(e) => setPostalCode(e.target.value)}
             required
           ></Form.Control>
         </Form.Group>
@@ -71,7 +70,7 @@ const ShippingScreen = ({ history }) => {
             type='text'
             placeholder='Enter Country'
             value={country}
-            onChange={e => setCountry(e.target.value)}
+            onChange={(e) => setCountry(e.target.value)}
             required
           ></Form.Control>
         </Form.Group>
