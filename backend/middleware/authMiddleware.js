@@ -22,7 +22,7 @@ const protect = asyncHandler(async (req, res, next) => {
     } catch (error) {
       console.error(error);
       res.status(401);
-      throw new Error("Not authorized. Invalid token");
+      throw new Error("Not authorized. Invalid token.");
     }
   }
 
@@ -32,4 +32,14 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protect };
+const admin = (req, res, next) => {
+  // if the user is logged in and an admin
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as an admin.");
+  }
+};
+
+export { protect, admin };
