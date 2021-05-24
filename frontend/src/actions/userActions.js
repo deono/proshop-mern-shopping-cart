@@ -78,6 +78,8 @@ export const logout = () => dispatch => {
   dispatch({
     type: USER_LIST_RESET
   });
+
+  // redirect to login page
   document.location.href = '/login';
 };
 

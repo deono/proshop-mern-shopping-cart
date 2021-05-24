@@ -2,6 +2,7 @@ import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
+  ORDER_CREATE_RESET,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
@@ -12,8 +13,8 @@ import {
   ORDER_LIST_USER_REQUEST,
   ORDER_LIST_USER_FAIL,
   ORDER_LIST_USER_SUCCESS,
-  ORDER_LIST_USER_RESET,
-} from "../constants/orderConstants";
+  ORDER_LIST_USER_RESET
+} from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -23,6 +24,8 @@ export const orderCreateReducer = (state = {}, action) => {
       return { loading: false, success: true, order: action.payload };
     case ORDER_CREATE_FAIL:
       return { loading: false, error: action.payload };
+    case ORDER_CREATE_RESET:
+      return {};
     default:
       return state;
   }

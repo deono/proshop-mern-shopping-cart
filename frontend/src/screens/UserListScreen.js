@@ -16,6 +16,8 @@ const UserListScreen = ({ history }) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    // only list users if logged in user is an admin,
+    // otherwise redirect to login screen
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
     } else {
