@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
-import { register } from "../actions/userActions";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import FormContainer from '../components/FormContainer';
+import { register } from '../actions/userActions';
 
 const RegisterScreen = ({ location, history }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
+  const userRegister = useSelector(state => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
   // check if redirect set in query string, and set to variable
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   // redirect if user is already logged in
   useEffect(() => {
@@ -28,11 +28,11 @@ const RegisterScreen = ({ location, history }) => {
     }
   }, [history, userInfo, redirect]);
 
-  const submitHandler = (e) => {
+  const submitHandler = e => {
     e.preventDefault();
     // check if passwords match
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      setMessage('Passwords do not match');
     } else {
       dispatch(register(name, email, password));
     }
@@ -48,7 +48,7 @@ const RegisterScreen = ({ location, history }) => {
               type='text'
               placeholder='Enter name'
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -58,7 +58,7 @@ const RegisterScreen = ({ location, history }) => {
               type='email'
               placeholder='Enter email'
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -68,7 +68,7 @@ const RegisterScreen = ({ location, history }) => {
               type='password'
               placeholder='Enter password'
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -78,7 +78,7 @@ const RegisterScreen = ({ location, history }) => {
               type='password'
               placeholder='Confirm password'
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={e => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -89,8 +89,8 @@ const RegisterScreen = ({ location, history }) => {
 
         <Row className='py-3'>
           <Col>
-            Already have an account?{" "}
-            <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+            Already have an account?{' '}
+            <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
               Login
             </Link>
           </Col>
