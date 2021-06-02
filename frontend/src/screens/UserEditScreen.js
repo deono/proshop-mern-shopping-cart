@@ -1,37 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
-import { getUserDetails } from '../actions/userActions';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import FormContainer from "../components/FormContainer";
+import { getUserDetails, updateUser } from "../actions/userActions";
+import { USER_UPDATE_RESET } from "../constants/userConstants";
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
   const dispatch = useDispatch();
-  const userDetails = useSelector(state => state.userDetails);
+
+  const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
-  useEffect(() => {
-    // if the user doesnt exist or id doesnt match, fetch user
-    // userId comes from the url
-    if (!user.name || user._id !== userId) {
-      dispatch(getUserDetails(userId));
-    } else {
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
-    }
-  }, [dispatch, userId, user]);
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
 
-  const submitHandler = e => {
+  useEffect(() => {
+    // if succcessfuly updated, reset state and redirect to user list
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET });
+      history.push("/admin/userlist");
+    } else {
+      // if the user doesnt exist or id doesnt match, fetch user
+      // (userId comes from the url)
+      if (!user.name || user._id !== userId) {
+        dispatch(getUserDetails(userId));
+      } else {
+        // set state to current userDetails
+        setName(user.name);
+        setEmail(user.email);
+        setIsAdmin(user.isAdmin);
+      }
+    }
+  }, [dispatch, userId, user, history, successUpdate]);
+
+  const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(updateUser({ _id: userId, name, email, isAdmin }));
   };
 
   const renderForm = () => {
@@ -44,7 +61,7 @@ const UserEditScreen = ({ match, history }) => {
               type='text'
               placeholder='Enter name'
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -54,7 +71,7 @@ const UserEditScreen = ({ match, history }) => {
               type='email'
               placeholder='Enter email'
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -63,7 +80,7 @@ const UserEditScreen = ({ match, history }) => {
               type='checkbox'
               label='Is Admin?'
               checked={isAdmin}
-              onChange={e => setIsAdmin(e.target.checked)}
+              onChange={(e) => setIsAdmin(e.target.checked)}
             ></Form.Check>
           </Form.Group>
 
@@ -82,6 +99,8 @@ const UserEditScreen = ({ match, history }) => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
 
         {loading ? (
           <Loader />

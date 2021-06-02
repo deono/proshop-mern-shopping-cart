@@ -1,10 +1,10 @@
 // https://www.npmjs.com/package/express-async-handler/v/1.1.4
 // Simple middleware for handling exceptions inside of async express routes
 // and passing them to your express error handlers.
-import asyncHandler from 'express-async-handler';
-import generateToken from '../utils/generateToken.js';
+import asyncHandler from "express-async-handler";
+import generateToken from "../utils/generateToken.js";
 // import user model
-import User from '../models/userModel.js';
+import User from "../models/userModel.js";
 
 // @desc    Authenticate user and get token
 // @route   POST /api/users/login
@@ -23,11 +23,11 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
-    throw new Error('Invalid email or password');
+    throw new Error("Invalid email or password");
   }
 });
 
@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (userExists) {
     // send and error if user exists
     res.status(400);
-    throw new Error('User already exists');
+    throw new Error("User already exists");
   }
 
   // create and save a new user
@@ -56,11 +56,11 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
-    throw new Error('Invalid user data');
+    throw new Error("Invalid user data");
   }
 });
 
@@ -77,10 +77,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
     });
   } else {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
@@ -109,10 +109,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id)
+      token: generateToken(updatedUser._id),
     });
   } else {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
@@ -126,7 +126,7 @@ const getUsers = asyncHandler(async (req, res) => {
     res.json(users);
   } else {
     res.status(404);
-    throw new Error('No users were found');
+    throw new Error("No users were found");
   }
 });
 
@@ -138,10 +138,10 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   if (user) {
     await user.remove();
-    res.json('User removed.');
+    res.json("User removed.");
   } else {
     res.status(404);
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
@@ -149,13 +149,13 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/:id
 // @access  Private/Admin
 const getUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).select('-password');
+  const user = await User.findById(req.params.id).select("-password");
 
   if (user) {
     res.json(user);
   } else {
     res.status(404);
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
@@ -164,9 +164,6 @@ const getUserById = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-
-  // console.log(user);
-  console.log(req.user);
 
   // update the user profile details
   if (user) {
@@ -182,10 +179,10 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin
+      isAdmin: updatedUser.isAdmin,
     });
   } else {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
@@ -197,5 +194,5 @@ export {
   getUsers,
   deleteUser,
   getUserById,
-  updateUser
+  updateUser,
 };
