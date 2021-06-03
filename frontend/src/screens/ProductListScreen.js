@@ -4,13 +4,20 @@ import { Button, Table, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { listProducts } from "../actions/productActions";
+import { listProducts, deleteProduct } from "../actions/productActions";
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -23,22 +30,62 @@ const ProductListScreen = ({ history, match }) => {
     } else {
       history.push("/login");
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, successDelete]);
 
-  const deleteHandler = (user) => {
+  const deleteHandler = (product) => {
     if (
       window.confirm(
-        `Are you sure you want to delete the product?"${user.name}"?`
+        `Are you sure you want to delete the product "${product.name}"?`
       )
     ) {
       // delete products
-      console.log("deleteHandler");
+      dispatch(deleteProduct(product._id));
     }
   };
 
   const createProductHandler = (product) => {
     // create products
     console.log("createProductHandler");
+  };
+
+  const renderTable = () => {
+    return (
+      <Table striped bordered hover responsive className='table-sm'>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th>CATEGORY</th>
+            <th>BRAND</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product._id}>
+              <td>
+                <Link to={`/admin/product/${product._id}/edit`}>
+                  {product._id}
+                </Link>
+              </td>
+              <td>{product.name}</td>
+              <td>£ {product.price}</td>
+              <td>{product.category}</td>
+              <td>{product.brand}</td>
+              <td>
+                <Button
+                  variant='danger'
+                  className='btn-sm'
+                  onClick={() => deleteHandler(product)}
+                >
+                  <i className='fas fa-trash'></i>
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    );
   };
 
   return (
@@ -53,46 +100,14 @@ const ProductListScreen = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>PRICE</th>
-              <th>CATEGORY</th>
-              <th>BRAND</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>
-                  <Link to={`/admin/product/${product._id}/edit`}>
-                    {product._id}
-                  </Link>
-                </td>
-                <td>{product.name}</td>
-                <td>£ {product.price}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
-                <td>
-                  <Button
-                    variant='danger'
-                    className='btn-sm'
-                    onClick={() => deleteHandler(product._id)}
-                  >
-                    <i className='fas fa-trash'></i>
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        renderTable()
       )}
     </>
   );
