@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -8,26 +8,24 @@ import {
   ListGroup,
   Card,
   Button,
-  Form
-} from 'react-bootstrap';
-import Rating from '../components/Rating';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import { listProductDetails } from '../actions/productActions';
-import { addToCart } from '../actions/cartActions';
+  Form,
+} from "react-bootstrap";
+import Rating from "../components/Rating";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import { listProductDetails } from "../actions/productActions";
+import { addToCart } from "../actions/cartActions";
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
 
-  const productDetails = useSelector(state => state.productDetails);
+  const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  console.log('rating', product.rating);
-
   // get cart items to check if product already in cart
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   // test if product already in cart
@@ -35,7 +33,7 @@ const ProductScreen = ({ history, match }) => {
     let foundProductInCart;
     if (cartItems && product) {
       foundProductInCart = cartItems.find(
-        cartItem => cartItem.product === product._id
+        (cartItem) => cartItem.product === product._id
       );
     }
 
@@ -56,7 +54,7 @@ const ProductScreen = ({ history, match }) => {
   // };
 
   const addToCartHandler = () => {
-    console.log('qty', qty);
+    console.log("qty", qty);
     dispatch(addToCart(product._id, Number(qty)));
     // history.push('/cart');
   };
@@ -98,7 +96,7 @@ const ProductScreen = ({ history, match }) => {
                   <Row>
                     <Col>Status</Col>
                     <Col>
-                      {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                      {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -110,9 +108,9 @@ const ProductScreen = ({ history, match }) => {
                         <Form.Control
                           as='select'
                           value={qty}
-                          onChange={e => setQty(e.target.value)}
+                          onChange={(e) => setQty(e.target.value)}
                         >
-                          {[...Array(product.countInStock).keys()].map(x => (
+                          {[...Array(product.countInStock).keys()].map((x) => (
                             <option key={x + 1}>{x + 1}</option>
                           ))}
                         </Form.Control>
@@ -131,8 +129,8 @@ const ProductScreen = ({ history, match }) => {
                     }
                   >
                     {productInCart(cartItems, product)
-                      ? 'Already in cart'
-                      : 'Add to cart'}
+                      ? "Already in cart"
+                      : "Add to cart"}
                   </Button>
                 </ListGroup.Item>
               </ListGroup>
