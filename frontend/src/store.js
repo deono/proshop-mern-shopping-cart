@@ -26,6 +26,7 @@ import {
   orderPayReducer,
   orderListUserReducer,
   orderListReducer,
+  orderDeliverReducer,
 } from "./reducers/orderReducer";
 
 const reducer = combineReducers({
@@ -47,6 +48,7 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderListUser: orderListUserReducer,
   orderList: orderListReducer,
+  orderDeliver: orderDeliverReducer,
 });
 
 // get items from localStorage to set as initial state
