@@ -1,0 +1,7 @@
+2021-06-11T10:34:05.543Z POST /api/users/login 200 279 - 180.708 ms
+2021-06-11T10:40:16.228Z  1.1 ::1  PostmanRuntime/7.26.8 POST /api/users/login 200 279 - 177.867 ms
+2021-06-11T10:42:30.290Z 1.1 ::1  PUT /api/products/60be074f97c5bffaf31ecd73 PostmanRuntime/7.26.8 404 249 - 62.431 ms
+2021-06-11T10:43:00.551Z 1.1 ::1  GET /api/products PostmanRuntime/7.26.8 200 3799 - 28.804 ms
+2021-06-11T10:44:05.605Z 1.1 ::ffff:127.0.0.1 http://localhost:3000/ GET /api/products Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 304  - 27.946 ms
+2021-06-11T10:44:55.878Z 1.1 ::ffff:127.0.0.1 http://localhost:3000/product/60b8cfe2bc6651506660a8fa GET /api/products/60b8cfe2bc6651506660a8fa Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 304  - 27.935 ms
+2021-06-11T10:45:16.181Z 1.1 ::ffff:127.0.0.1 http://localhost:3000/ GET /api/products Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 304  - 22.525 ms
