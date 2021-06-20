@@ -49,9 +49,7 @@ var accessLogStream = rfs.createStream(generator, {
   path: path.join(__dirname, "logs"),
 });
 
-// morgan logger - used only in dev mode
-// setup the logger
-
+// morgan logger
 app.use(
   morgan(
     function (tokens, req, res) {
