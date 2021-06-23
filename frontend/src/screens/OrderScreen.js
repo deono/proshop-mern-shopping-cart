@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { PayPalButton } from "react-paypal-button-v2";
-import { Link } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { PayPalButton } from 'react-paypal-button-v2';
+import { Link } from 'react-router-dom';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import {
   getOrderDetails,
   payOrder,
-  deliverOrder,
-} from "../actions/orderActions";
+  deliverOrder
+} from '../actions/orderActions';
 import {
   ORDER_PAY_RESET,
-  ORDER_DELIVER_RESET,
-} from "../constants/orderConstants";
+  ORDER_DELIVER_RESET
+} from '../constants/orderConstants';
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
@@ -23,21 +23,21 @@ const OrderScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const orderDetails = useSelector((state) => state.orderDetails);
+  const orderDetails = useSelector(state => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
-  const orderPay = useSelector((state) => state.orderPay);
+  const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
-  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const orderDeliver = useSelector(state => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
   if (!loading) {
     //   Calculate prices
-    const addDecimals = (num) => {
+    const addDecimals = num => {
       return (Math.round(num * 100) / 100).toFixed(2);
     };
 
@@ -50,16 +50,16 @@ const OrderScreen = ({ match, history }) => {
     // if not logged in
     if (!userInfo) {
       // redirect to login
-      history.push("/login");
+      history.push('/login');
     }
 
     const addPayPalScript = async () => {
       // fetch the client ID from the server
-      const { data: clientId } = await axios.get("/api/config/paypal");
+      const { data: clientId } = await axios.get('/api/config/paypal');
 
       // build paypal script
-      const script = document.createElement("script");
-      script.type = "text/javascript";
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
       script.async = true;
       script.onload = () => {
@@ -89,9 +89,9 @@ const OrderScreen = ({ match, history }) => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, orderId, order, successPay, successDeliver]);
+  }, [dispatch, orderId, order, successPay, successDeliver, history, userInfo]);
 
-  const successPaymentHandler = (paymentResult) => {
+  const successPaymentHandler = paymentResult => {
     console.log(paymentResult);
     //pay order action
     dispatch(payOrder(orderId, paymentResult));
@@ -117,13 +117,13 @@ const OrderScreen = ({ match, history }) => {
                 <strong>Name: </strong> {order.user.name}
               </p>
               <p>
-                <strong>Email: </strong>{" "}
+                <strong>Email: </strong>{' '}
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
                 <strong>Address: </strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
-                {order.shippingAddress.postalCode},{" "}
+                {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
+                {order.shippingAddress.postalCode},{' '}
                 {order.shippingAddress.country}
               </p>
               {order.isDelivered ? (

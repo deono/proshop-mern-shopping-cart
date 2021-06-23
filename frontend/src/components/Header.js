@@ -1,17 +1,19 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
-import { Container, Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
-import { logout } from "../actions/userActions";
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap';
+import SearchBox from './SearchBox';
+import { logout } from '../actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
   // get cart items to display the count in navbar
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
 
   const logoutHandler = () => {
@@ -20,7 +22,7 @@ const Header = () => {
 
   return (
     <header>
-      .{" "}
+      .{' '}
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
@@ -28,10 +30,11 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+            <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart'></i> Cart{" "}
+                  <i className='fas fa-shopping-cart'></i> Cart{' '}
                   {cartItems.length > 0 && (
                     <Badge variant='info'>
                       {cartItems.reduce((acc, item) => acc + item.qty, 0)}
